@@ -22,21 +22,23 @@ const userSchema = new mongoose.Schema({
                match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g]},
     telefono : { type: Number ,
                  match: [/D*([+56]\d [2-9])(\D)(\d{4})(\D)(\d{4})\D*/g] },
-    clave : { type: String,
-              match:[/^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/]},
+    clave : { type: String},
     recuperacion : { type: String  },
     direccion: {
              calle : { 
                 type: String,
-                lowercase: true, 
+                trim: true,
+                uppercase: true, 
                 minLength: 2},
              numero:  { 
                 type: String,
-                lowercase: true, 
-                minLength: 2 },
+                trim: true,
+                uppercase: true, 
+                minLength: 1 },
              depto:  { 
                 type: String,
-                lowercase: true},
+                trim: true,
+                uppercase: true},
              comuna : { 
                 type: String ,
                 lowercase: true, 
