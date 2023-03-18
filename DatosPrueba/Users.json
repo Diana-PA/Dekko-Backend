@@ -1,5 +1,5 @@
-Users=
 [
+
     {	"iduser" : "1",	"fecharegistro" : "28-02-2023",	"rut" : "885798004",	"nombre" : "LUIS MUÑOZ",	"correo" : "katherine.pavlov.s@gmail.com",	"telefono" : 42301121,	"clave" : "1",	"recuperacion" : "",	"calle" : " IRARRAZAVAL",	"numero" : "878",	"depto" : "depto 1405",	"comuna" : "LAS CONDES",	"ciudad" : "SANTIAGO"	},
     {	"iduser" : "2",	"fecharegistro" : "03-01-2023",	"rut" : "773251800",	"nombre" : "CARLA GAUECA",	"correo" : "a.cattan.s@gmail.com",	"telefono" : 56175350,	"clave" : "2",	"recuperacion" : "2",	"calle" : "1112 CALLE SANTA TERESA VILLA LOS LAGOS LA LIGUA",	"numero" : "134",	"depto" : "",	"comuna" : "LAS CONDES",	"ciudad" : "SANTIAGO"	},
     {	"iduser" : "3",	"fecharegistro" : "15-11-2022",	"rut" : "768026998",	"nombre" : "MARCY MONCADA",	"correo" : "a.loyola.laree@gmail.com",	"telefono" : 65773086,	"clave" : "3",	"recuperacion" : "",	"calle" : "AV. DUCAUD",	"numero" : "1445",	"depto" : "Casa A",	"comuna" : "LAS CONDES",	"ciudad" : "SANTIAGO"	},
@@ -19,5 +19,5 @@ Users=
     {	"iduser" : "17",	"fecharegistro" : "06-10-2022",	"rut" : "789363307",	"nombre" : "RODRIGO VALDES",	"correo" : "alejandroyanes@hotmail.com",	"telefono" : 98290186,	"clave" : "17",	"recuperacion" : "",	"calle" : "AV. LAS CONDES  ",	"numero" : "9765",	"depto" : "DEPTO 302",	"comuna" : "LAS CONDES",	"ciudad" : "SANTIAGO"	},
     {	"iduser" : "18",	"fecharegistro" : "06-10-2022",	"rut" : "60803000K",	"nombre" : "DANNY MOYA SEPULVEDA",	"correo" : "amdrea.verschatse@gmail.com",	"telefono" : 98473314,	"clave" : "18",	"recuperacion" : "",	"calle" : "ARCANGEL ",	"numero" : "1200",	"depto" : " DEPTO. 603",	"comuna" : "ESTACION CENTRAL",	"ciudad" : "SANTIAGO"	},
     {	"iduser" : "19",	"fecharegistro" : "06-10-2022",	"rut" : "969293900",	"nombre" : "RODRIGO ALBERTO GALAZ GARRIDO",	"correo" : "amparo@anticostudio.cl",	"telefono" : 99059824,	"clave" : "19",	"recuperacion" : "",	"calle" : "ARTURO FERNÁNDEZ ",	"numero" : "2097",	"depto" : "DEPTO 304",	"comuna" : "ESTACION CENTRAL",	"ciudad" : "SANTIAGO"	},
-    {	"iduser" : "20",	"fecharegistro" : "06-10-2022",	"rut" : "608050000",	"nombre" : "ALEJANDRA BRAVO",	"correo" : "anabelen.garrido@outlook.com",	"telefono" : 99398933,	"clave" : "20",	"recuperacion" : "",	"calle" : "ARTURO PRAT",	"numero" : "4346",	"depto" : "CASA 1",	"comuna" : "ESTACION CENTRAL",	"ciudad" : "SANTIAGO"	}
-    ]
+    {	"iduser" : "20",	"fecharegistro" : "06-10-2022",	"rut" : "608050000",	"nombre" : "ALEJANDRA BRAVO",	"correo" : "anabelen.garrido@outlook.com",	"telefono" : 99398933,	"clave" : "20",	"recuperacion" : "",	"calle" : "ARTURO PRAT",	"numero" : "4346",	"depto" : "CASA 1",	"comuna" : "ESTACION CENTRAL",	"ciudad" : "SANTIAGO"	} 
+]
