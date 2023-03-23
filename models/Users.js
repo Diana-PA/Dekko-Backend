@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Product = require('../models/Products');
+const crypto=require('crypto');
+const jwt=require('jsonwebtoken');
  
 const productCarritoSchema = new mongoose.Schema({
     idproduct:  { type: mongoose.ObjectId, ref: 'Product' },
@@ -20,7 +22,8 @@ const userSchema = new mongoose.Schema({
                match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g]},
     telefono : { type: Number ,
                  match: [/D*([+56]\d [2-9])(\D)(\d{4})(\D)(\d{4})\D*/g] },
-    clave : { type: String},
+    password : { type: String},
+    salt : { type: String},
     recuperacion : { type: String  },
     direccion: {
              calle : { 
@@ -50,6 +53,32 @@ const userSchema = new mongoose.Schema({
                 default: false },
     carrito : [productCarritoSchema],
     })
+
+   
+userSchema.methods.hashPassword = function (password)
+{
+   this.salt = crypto.randomBytes(10).toString('hex'); //Salt de cada usuario
+   this.password  =  crypto.pbkdf2Sync( password, this.salt, 5000, 10, 'sha-512').toString('hex');
+   console.log( this.password );
+}
+
+userSchema.methods.hashValidation = function (password, salt, passwordBD)
+{
+   const hash  = crypto.pbkdf2Sync( password, salt, 5000, 10, 'sha-512').toString('hex');
+   return hash === passwordBD;
+}
+
+
+
+userSchema.methods.generateToken = function (){
+   const payload ={
+      id: this._id,
+      nombre: this.name,
+      correo: this.email
+   }
+   const token = jwt.sign(payload, process.env.SECRET, {expiresIn: 900000});
+   return token;
+}
 
 const User = mongoose.model('user', userSchema);
 
