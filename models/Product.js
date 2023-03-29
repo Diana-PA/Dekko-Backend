@@ -38,6 +38,6 @@ const productSchema = new mongoose.Schema({
         min: [1 ,'El precio debe ser mayor que 0'] }
 })
 
-const Product = mongoose.model('product', productSchema);
+const Product = mongoose.model("product", productSchema)
 
 module.exports = Product;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Product = require('../models/Products');
-const User = require('../models/Users');
+const Product = require('./Product');
+const User = require('./User');
   
 const productOrderSchema = new mongoose.Schema({
 idproduct:  { type: mongoose.ObjectId, ref: 'Product' },

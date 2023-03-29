@@ -1,45 +1,41 @@
-const User = require('../models/Users');
 
-const crypto=require('crypto');
+//* importacion de la Referencia sobre la coleccion con su esquema determinado.
+const User = require('../models/User');
+const crypto = require('crypto');
+
+
 
 const createUser = async(req, res) => {
+   
     try {
 
-        // Verificar si existe
-        const userEmail=await User.findOne({ correo: req.body.correo }) 
-        if (userEmail )
-        { throw new Error('Email en uso!!');
+
+        //* Validacion de email
+
+        const userEmail = await User.findOne({ email: req.body.email })
+
+        if(userEmail) {
+            throw new Error('Email en uso!!!')
         }
-        const newUser = new User( req.body );
+
+        //* Guardar informacion en mi base de datos
+
+        const newUser = new User(req.body);
         newUser.hashPassword(req.body.password);
         await newUser.save();
-        res.json ({success: true, message: 'Usuario Creado', info: newUser.password, token: newUser.generateToken()});
+
+
+        res.json({success: true, message: "Usuario Creado", info: newUser._id, token: newUser.generateToken()})
+            
     } catch (error) {
         res.json({success: false, message: error.message})
     }
 }
- 
-const login = async(req, res) => {
-    try {
-        const {correo, password}=req.body ;
-        const user=await User.findOne({correo}) 
-        if (!user)
-        { throw new Error('user no registrado!!');
-        }
-       const validatePassword = false //User.hashValidation  (password, user.salt,  user.password);
 
-        if (!validatePassword)
-        { throw new Error('email o contraseña invalida!!');
-        }
-        res.json ({success: true, message: 'Has iniciado sesion', info: user._id, token: user.generateToken()});
- 
-    } catch (error) {
-        res.status(500).json({success: false, message: error.message})
-    }
-}
- 
+
 const getUsers = async(req, res) => {
     try {
+        //const users = await User.find().populate('favoriteProducts');
         const users = await User.find();
         res.json({success: true, info: users })
     } catch (error) {
@@ -47,36 +43,78 @@ const getUsers = async(req, res) => {
     }
 }
 
-const getVerifiedUser = async() => {
+// Funciones actualizar y delete
+
+const editUser = async(req, res) => {
+
     try {
-        //const {} = req.auth;
-        res.json({success: true })
+        // throw new Error('error forzado')
+        const {id} = req.auth;
+        const contain = req.body;
+
+        const emails = await User.find()
+
+        emails.forEach(userEmail => {
+            if(userEmail.email === contain.email){
+                throw new Error('Email en uso!')
+            }
+        })
+
+
+        const updateUser = await User.findByIdAndUpdate(id, contain, {new: true}).select('-password -salt -isAdmin');
+
+        res.json({success: true, msg: "usuario actualizado", updateUser})
     } catch (error) {
-        res.json({success: false, message: error.message})
+        res.status(500).json({success: false, message: error.message})
     }
 }
 
-const editUser   = async(req, res) => {
+const deleteUser =  async(req, res) => {
     try {
-        const {id}=req.params ;
-        const datos=req.body;
-        const updateUser = await User.findByIdAndUpdate(id, datos , {new: true});
-        res.json({success: true,  message: "user Actualizado", info: updateUser })
+        // throw new Error('error forzado')
+        const {id} = req.params;
+
+        const destroyUser = await User.findByIdAndDelete(id);
+
+        res.json({success: true, msg: "usuario eliminado", destroyUser})
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+}
+
+const login = async(req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log(email, password,req.body )
+        const user = await User.findOne({ email })
+        console.log(user)
+        if(!user){
+            throw new Error('Usuario no registrado!!!')
+        }
+        const validatePassword = user.hashValidation(password, user.salt, user.password)
+        if(!validatePassword){
+            throw new Error('email o contraseña incorrecta!!!')
+        }
+        res.json({success: true, msg: 'Has iniciado sesion', token: user.generateToken()})
     } catch (error) {
         res.status(500).json({success: false, message: error.message})
     }
 }
 
 
-
-const deleteUser   = async(req, res) => {
+const getUserVerify = async(req, res) => {
     try {
-         const {id}=req.params ;
-         const destroyedUser = await User.findByIdAndDelete(id);
-         res.json({success: true,  message: "user Eliminado", info: destroyedUser })
-     } catch (error) {
-         res.status(500).json({success: false, message: error.message})
-     }
+        const { id } = req.auth
+
+       // const user = await User.findById(id).populate('favoriteProducts').select('-password -salt');
+        const user = await User.findById(id).select('-password -salt');
+
+        res.json({success: true, msg: `Informacion de: ${user.email}`, info: user })
+
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
 }
 
-module.exports = {createUser, getUsers,  editUser, deleteUser,  login, getVerifiedUser};
+
+module.exports = {createUser, getUsers, editUser, deleteUser, login, getUserVerify};
