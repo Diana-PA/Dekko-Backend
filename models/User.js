@@ -3,13 +3,6 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        default: "Nombre no especificado",
-        trim: true,
-        lowercase: true,
-        minLength: 2
-    },
     nombre: {
         type: String,
         default: "Nombre no especificado",
@@ -17,7 +10,7 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         minLength: 2
     },
-    email: {
+    correo: {
         type: String,
         trim: true,
         match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g],
@@ -62,6 +55,9 @@ const userSchema = new mongoose.Schema({
     ciudad: {
         type: String
     },
+    fecharegistro: {
+        type: String
+    },
     favoriteProducts: {
         type: mongoose.Types.ObjectId,
         ref: "product"
@@ -80,16 +76,13 @@ userSchema.methods.hashValidation = function(password, salt, passwordDB){
 }
 
 userSchema.methods.generateToken = function(){
-
     const payload = {
         id: this._id,
-        email: this.email
+        correo: this.correo
     }
-
     const token = jwt.sign(payload, process.env.SECRET, {expiresIn: 900000})
     return token;
 }
-
 
 
 const User = mongoose.model('user', userSchema);
