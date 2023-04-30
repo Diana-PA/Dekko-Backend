@@ -96,7 +96,6 @@ const deleteUser =  async(req, res) => {
 const login = async(req, res) => {
     try {
         const { correo, password } = req.body;
-        console.log(correo, password,req.body )
         const user = await User.findOne({ correo })
         console.log(user)
         if(!user){

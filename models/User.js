@@ -16,12 +16,6 @@ const userSchema = new mongoose.Schema({
         match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g],
         required: true
     },
-    correo: {
-        type: String,
-        trim: true,
-        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g],
-        required: true
-    },
     age: {
         type: Number,
         min: 16,

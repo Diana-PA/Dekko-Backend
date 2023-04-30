@@ -38,5 +38,34 @@ const deleteProduct   = async(req, res) => {
          res.status(500).json({success: false, message: error.message})
      }
 }
-module.exports = {createProduct, getProducts , editProduct, deleteProduct};
+
+const getProductById = async (req, res) => {
+    
+    const {id}=req.params ;
+    
+    try {
+        const product = await Product.findById(id)
+        res.json({success:true, message: "Producto obtenido", info: product})
+        
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    }
+}
+
+const reducirStock = async (req, res) => {
+
+    //volver aca cuando el carrito esté listo
+    const productosComprados = req.body 
+    try {
+        productosComprados.map(async(productoComprado)=> {
+            await Product.findByIdAndUpdate(productoComprado._id, {stock: productoComprado.stock - productoComprado.quantity})
+        })
+        res.json({success: true, message: "El stock se ha reducido"})
+    } catch (error) {
+        res.status(500).json({success: false, message: "hubo un error"})
+    }
+
+}
+
+module.exports = {createProduct, getProducts , editProduct, deleteProduct, getProductById, reducirStock};
  
